@@ -104,13 +104,11 @@ jobs:
         cd UI_Automation_Project  # Adjust the directory to where your pom.xml is located
         mvn verify
       continue-on-error: true
-      env:
-        ARTIFACTS_DIR: UI_Automation_Project/target/surefire-reports
 
     - name: Upload HTML Report
       uses: actions/upload-artifact@v2
       with:
         name: karate-html-report
-        path: ${{ env.ARTIFACTS_DIR }}
+        path: UI_Automation_Project/target/surefire-reports
 
 
