@@ -14,16 +14,15 @@
         <karate.version>1.4.1</karate.version>
     </properties>
     
-    <dependencies>
+    <dependencies>         
         <dependency>
             <groupId>com.intuit.karate</groupId>
             <artifactId>karate-junit5</artifactId>
-            <version>1.4.1</version>
+            <version>${karate.version}</version>
             <scope>test</scope>
-        </dependency>
-        <!-- Add any other dependencies your project requires -->
+        </dependency>		
     </dependencies>
-    
+
     <build>
         <testResources>
             <testResource>
@@ -33,51 +32,25 @@
                 </excludes>
             </testResource>
         </testResources>
-        
         <plugins>
-            <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
                     <encoding>UTF-8</encoding>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
-            
-            <!-- Maven Surefire Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>${maven.surefire.version}</version>
                 <configuration>
-                    <includes>
-                        <include>**/TestLoginRunner.java</include>
-                    </includes>
-                    <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
-            </plugin>
-            
-            <!-- Karate Maven Plugin -->
-            <plugin>
-                <groupId>com.intuit.karate</groupId>
-                <artifactId>karate-maven-plugin</artifactId>
-                <version>${karate.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>karate</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/surefire-reports</outputDirectory>
-                            <disableKarateSummary>true</disableKarateSummary>
-                            <tags>~@ignore</tags>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+            </plugin>          
+        </plugins>        
+    </build>    
 </project>
