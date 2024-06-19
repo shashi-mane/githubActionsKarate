@@ -9,7 +9,8 @@ function fn() {
   var config = {
     env: env,
     browser:browser,
-    myVarName: 'someValue'
+    myVarName: 'someValue',
+    baseUrl =  'https://www.saucedemo.com/'
   }
   
   if (env == 'dev') {
