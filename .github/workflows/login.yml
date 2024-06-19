@@ -73,7 +73,7 @@ jobs:
             -w /karate-tests \
             -e BASE_URL=https://www.saucedemo.com/ \
             karate-tests \
-            java -jar karate.jar UI_Automation_Project/src/test/java/UI_Automation_Project/login/TestLoginRunner.java
+            java -jar karate-tests/karate.jar UI_Automation_Project/src/test/java/UI_Automation_Project/login/TestLoginRunner.java
 
       - name: List files in UI_Automation_Project/target/surefire-reports
         run: ls -R UI_Automation_Project/target/surefire-reports
