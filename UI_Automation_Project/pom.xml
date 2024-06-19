@@ -8,13 +8,20 @@
     <artifactId>UI_Automation_Project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <karate.version>1.4.1</karate.version>
+    </properties>
+    
     <dependencies>
         <dependency>
             <groupId>com.intuit.karate</groupId>
             <artifactId>karate-junit5</artifactId>
-            <version>1.4.1</version>
+            <version>${karate.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- Add any other dependencies your project requires -->
     </dependencies>
     
     <build>
@@ -28,74 +35,49 @@
         </testResources>
         
         <plugins>
-            <plugin>
-			    <groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-surefire-plugin</artifactId>
-			    <version>3.0.0-M5</version>
-			</plugin>
-        </plugins>
-    </build>
-</project>
-
-
-
-
-<!-- <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.api.uiAutomation</groupId>
-	<artifactId>UI_Automation_Project</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-
-	<properties>
-	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	<java.version>11</java.version>
-	<maven.compiler.version>3.11.0</maven.compiler.version>
-	<maven.surefire.version>3.0.0</maven.surefire.version>
-	<karate.version>1.4.1</karate.version>
-	</properties>  
-
-	<dependencies>
-		<dependency>
-			<groupId>com.intuit.karate</groupId>
-			<artifactId>karate-junit5</artifactId>
-			<version>1.4.1</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-	<build>
-		<testResources>
-			<testResource>
-				<directory>src/test/java</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</testResource>
-		</testResources>
-		<plugins>
+            <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
+                <version>3.11.0</version>
                 <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                     <encoding>UTF-8</encoding>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
                 </configuration>
             </plugin>
+            
+            <!-- Maven Surefire Plugin -->
             <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M5</version>
-            <configuration>
-                <includes>
-                    <include>**/TestLoginRunner.java</include>
-                </includes>
-                <testSourceDirectory>${project.basedir}/UI_Automation_Project</testSourceDirectory>
-            </configuration>
-            </plugin>          
-        </plugins> 
-	</build>
-</project> -->
-
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <includes>
+                        <include>**/TestLoginRunner.java</include>
+                    </includes>
+                    <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+                </configuration>
+            </plugin>
+            
+            <!-- Karate Maven Plugin -->
+            <plugin>
+                <groupId>com.intuit.karate</groupId>
+                <artifactId>karate-maven-plugin</artifactId>
+                <version>${karate.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>karate</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/surefire-reports</outputDirectory>
+                            <disableKarateSummary>true</disableKarateSummary>
+                            <tags>~@ignore</tags>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
