@@ -4,8 +4,8 @@ Feature: Login test
 Background:
 #* def locators = read('classpath:UI_Automation_Project/login/locators.json')
 #* def testData = read('classpath:UI_Automation_Project/login/testData.json')
-* def locators = read('file:src/test/java/UI_Automation_Project/login/locators.json')
-* def testData = read('file:src/test/java/UI_Automation_Project/login/testData.json')
+* def locators = read('file:UI_Automation_Project/src/test/java/UI_Automation_Project/login/locators.json')
+* def testData = read('file:UI_Automation_Project/src/test/java/UI_Automation_Project/login/testData.json')
 
 
 

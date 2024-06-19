@@ -30,9 +30,9 @@
         <testResources>
             <testResource>
                 <directory>src/test/java</directory>
-                <excludes>
+                <!-- <excludes>
                     <exclude>**/*.java</exclude>
-                </excludes>
+                </excludes> -->
             </testResource>
         </testResources>
         <plugins>
