@@ -70,6 +70,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Karate Reports
+          overwrite: true
           path: UI_Automation_Project/target/surefire-reports  # Path to the directory where Karate reports are generated
 
 
