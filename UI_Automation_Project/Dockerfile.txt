@@ -1,65 +1,18 @@
-# Use an official Node runtime as a parent image
-FROM node:14
+# Use an official Selenium standalone Chrome image as base
+FROM selenium/standalone-chrome
 
-# Set the working directory in the container
-WORKDIR /app
+# Set the working directory inside the container
+WORKDIR /karate-tests
 
-# Install Chrome and ChromeDriver
-RUN apt-get update && apt-get install -y \
-    wget \
-    gnupg \
-    curl \
-    unzip \
-    libxss1 \
-    libappindicator1 \
-    libindicator7 \
-    libgbm-dev \
-    libpango1.0-0 \
-    libxcomposite1 \
-    fonts-liberation \
-    libappindicator3-1 \
-    xdg-utils \
-    fonts-noto-color-emoji \
-    libatk-bridge2.0-0 \
-    libnspr4 \
-    libnss3 \
-    libgtk-3-0 \
-    libx11-xcb1 \
-    libxrandr2 \
-    libasound2 \
-    libxss1 \
-    libxtst6 \
-    libgconf-2-4 \
-    libatk1.0-0 \
-    libatspi2.0-0 \
-    libdrm2 \
-    libnspr4 \
-    libnss3 \
-    libgbm1 \
-    lsb-release \
-    xdg-utils \
-    --no-install-recommends \
-    && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update -y && apt-get upgrade -y \
-    && apt-get install google-chrome-stable -y \
-    && CHROME_VERSION="$(google-chrome --version | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')" \
-    && CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}) \
-    && curl -sS -o /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip \
-    && unzip /tmp/chromedriver_linux64.zip -d /usr/bin \
-    && rm /tmp/chromedriver_linux64.zip \
-    && chmod +x /usr/bin/chromedriver \
-    && apt-get clean && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy package.json and package-lock.json (if available)
-COPY package*.json ./
-
-# Install application dependencies
-RUN npm install
-
-# Copy the entire application
+# Copy necessary files into the container
 COPY . .
 
-# Command to run tests
-CMD ["npm", "test"]
+# Install Java (if not already installed in the base image)
+RUN apt-get update && \
+    apt-get install -y default-jre
+
+# Set environment variable for the base URL
+ENV BASE_URL=https://www.saucedemo.com/
+
+# Command to execute the Karate tests
+CMD ["java", "-jar", "karate.jar", "UI_Automation_Project/src/test/java/UI_Automation_Project/login/TestLoginRunner.java"]
