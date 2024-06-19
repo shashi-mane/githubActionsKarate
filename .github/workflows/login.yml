@@ -61,10 +61,10 @@ jobs:
         with:
           url: https://www.saucedemo.com/
           tests: UI_Automation_Project/src/test/java/UI_Automation_Project/login/TestLoginRunner.java
-          output-directory: UI_Automation_Project/target/karate-reports  # Specify the output directory for Karate reports
+          output-directory: UI_Automation_Project/target/surefire-reports  # Specify the output directory for Karate reports
 
-      - name: List files in UI_Automation_Project/target/karate-reports
-        run: ls -R UI_Automation_Project/target/karate-reports
+      - name: List files in UI_Automation_Project/target/surefire-reports
+        run: ls -R UI_Automation_Project/target/surefire-reports
 
       - name: Upload Test Reports
         uses: actions/upload-artifact@v4
