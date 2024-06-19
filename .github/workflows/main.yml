@@ -17,7 +17,23 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build -t my-docker-image .
+        run: docker build -t karate-tests .
 
       - name: Run tests in Docker container
-        run: docker run my-docker-image
+        run: |
+          docker run --rm --network host \
+            -v $(pwd):/karate-tests \
+            -w /karate-tests \
+            -e BASE_URL=https://www.saucedemo.com/ \
+            karate-tests \
+            java -jar karate.jar UI_Automation_Project/src/test/java/UI_Automation_Project/login/TestLoginRunner.java
+
+      - name: List files in UI_Automation_Project/target/surefire-reports
+        run: ls -R UI_Automation_Project/target/surefire-reports
+
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: Karate Reports
+          overwrite: true
+          path: UI_Automation_Project/target/surefire-reports  # Path to the directory where Karate reports are generated
