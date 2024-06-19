@@ -60,7 +60,8 @@ jobs:
         uses: erikbos/karate-action@main
         with:
           url: https://www.saucedemo.com/
-          tests: UI_Automation_Project/src/test/java/UI_Automation_Project/login/TestLoginRunner.java
+          # tests: UI_Automation_Project/src/test/java/UI_Automation_Project/login/TestLoginRunner.java
+          tests: UI_Automation_Project/src/test/java/UI_Automation_Project/login/login.feature
           output-directory: UI_Automation_Project/target/surefire-reports  # Specify the output directory for Karate reports
 
       - name: List files in UI_Automation_Project/target/surefire-reports
