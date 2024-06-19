@@ -2,8 +2,10 @@ Feature: Add products in cart
   login with reusable and add products to cart
 
   Background: 
-    * def locators = read('classpath:UI_Automation_Project/login/locators.json')
-    * def testData = read('classpath:UI_Automation_Project/login/testData.json')
+    #* def locators = read('classpath:UI_Automation_Project/login/locators.json')
+    #* def testData = read('classpath:UI_Automation_Project/login/testData.json')
+    * def locators = read('file:src/test/java/UI_Automation_Project/login/locators.json')
+    * def testData = read('file:src/test/java/UI_Automation_Project/login/testData.json')
 
   Scenario: Add products to cart
     * configure driver = { type: 'chrome', addOptions: ['--incognito']}

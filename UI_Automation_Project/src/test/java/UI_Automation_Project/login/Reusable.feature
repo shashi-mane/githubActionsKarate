@@ -2,8 +2,10 @@
 Feature: reusable function
 
   Background: 
-    * def locators = read('classpath:UI_Automation_Project/login/locators.json')
-    * def testData = read('classpath:UI_Automation_Project/login/testData.json')
+    #* def locators = read('classpath:UI_Automation_Project/login/locators.json')
+    #* def testData = read('classpath:UI_Automation_Project/login/testData.json')
+    * def locators = read('file:src/test/java/UI_Automation_Project/login/locators.json')
+    * def testData = read('file:src/test/java/UI_Automation_Project/login/testData.json')
 
   @LogInSauceLabs
   Scenario: log in saucelabs
