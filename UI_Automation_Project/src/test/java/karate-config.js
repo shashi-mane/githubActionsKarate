@@ -10,7 +10,9 @@ function fn() {
     env: env,
     browser:browser,
     myVarName: 'someValue',
-    baseUrl =  'https://www.saucedemo.com/'
+    baseUrl:  'https://www.saucedemo.com/',
+    locators: read('classpath:UI_Automation_Project/login/locators.json'),
+    testData: read('classpath:UI_Automation_Project/login/testData.json')
   }
   
   if (env == 'dev') {
