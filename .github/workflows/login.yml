@@ -95,13 +95,17 @@ jobs:
         distribution: 'adopt'
       
     - name: Build and test with Maven
-      run: mvn clean test
+      run: |
+        cd UI_Automation_Project  # Adjust the directory to where your pom.xml is located
+        mvn clean test
 
     - name: Generate Karate HTML Report
-      run: mvn verify
+      run: |
+        cd UI_Automation_Project  # Adjust the directory to where your pom.xml is located
+        mvn verify
       continue-on-error: true
       env:
-        ARTIFACTS_DIR: target/surefire-reports
+        ARTIFACTS_DIR: UI_Automation_Project/target/surefire-reports
 
     - name: Upload HTML Report
       uses: actions/upload-artifact@v2
