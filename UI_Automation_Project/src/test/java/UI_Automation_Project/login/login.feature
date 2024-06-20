@@ -2,7 +2,7 @@ Feature: Login test
   This is login test
 #json, retry, waitfor, reusable function, config file
 Background:
-* configure driver = { baseUrl: 'https://www.saucedemo.com/' }
+* def baseUrl ='https://www.saucedemo.com/' 
 #* def locators = read('classpath:UI_Automation_Project/login/locators.json')
 #* def testData = read('classpath:UI_Automation_Project/login/testData.json')
 * def locators = read('file:UI_Automation_Project/src/test/java/UI_Automation_Project/login/locators.json')
