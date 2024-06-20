@@ -1,8 +1,8 @@
 function fn() {
   var env = karate.env; // get system property 'karate.env'
-  // karate.log('karate.env system property was:', env);
-  // var browser = karate.properties['browser'] || 'chromedriver';
-  // karate.log('the browser set is: ' + browser + ', default: "chrome"');
+  karate.log('karate.env system property was:', env);
+  var browser = karate.properties['browser'] || 'chromedriver';
+  karate.log('the browser set is: ' + browser + ', default: "chrome"');
   if (!env) {
     env = 'dev';
   }
