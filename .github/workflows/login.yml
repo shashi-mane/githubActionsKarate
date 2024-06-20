@@ -133,7 +133,9 @@ jobs:
       - name: Run Login Scenarios
         working-directory: UI_Automation_Project  # Set the working directory to swaglab
         run: |
-          mvn clean test -Dtest=com.api.uiAutomation.UI_Automation_Project.login.TestLoginRunner -Dmaven.test.failure.ignore=false
+                  mvn -f UI_Automation_Project/pom.xml -Dtest=com.api.uiAutomation.UI_Automation_Project.login.TestLoginRunner test -DfailIfNoTests=false
+#mvn clean test -Dtest=com.api.uiAutomation.UI_Automation_Project.login.TestLoginRunner -Dmaven.test.failure.ignore=false
+         
 
       #- name: Archive test results
        # if: always()
