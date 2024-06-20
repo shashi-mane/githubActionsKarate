@@ -1,11 +1,9 @@
 function fn() {
   var env = karate.env; // get system property 'karate.env'
-  karate.log('karate.env system property was:', env);
+  // karate.log('karate.env system property was:', env);
   var browser = karate.properties['browser'] || 'chromedriver';
   karate.log('the browser set is: ' + browser + ', default: "chrome"');
-  if (!env) {
-    env = 'dev';
-  }
+
   var config = {
     env: env,
     browser:browser,
@@ -17,6 +15,9 @@ function fn() {
     }
     // locators: read('classpath:UI_Automation_Project/login/locators.json'),
     // testData: read('classpath:UI_Automation_Project/login/testData.json')
+  }
+  if (!env) {
+    env = 'dev';
   }
   
   if (env == 'dev') {
