@@ -28,5 +28,8 @@ function fn() {
   } else if (env == 'e2e') {
     // customize
   }
+  config.locators = read('file:UI_Automation_Project/src/test/java/UI_Automation_Project/login/locators.json');
+  config.testData = read('file:UI_Automation_Project/src/test/java/UI_Automation_Project/login/testData.json');
+
   return config;
 }
