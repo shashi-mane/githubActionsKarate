@@ -1,25 +1,48 @@
-# Use an official Selenium standalone Chrome image as base
-FROM selenium/standalone-chrome
+FROM maven:3-jdk-11
 
-# Set the working directory inside the container
-WORKDIR /karate-tests
+LABEL maintainer="Peter Thomas"
+LABEL url="https://github.com/githubActionsKarate"
 
-# Copy necessary files into the container
-COPY . .
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends \
+    google-chrome-stable
 
-# Install Java (if not already installed in the base image)
-RUN sudo apt-get update && \
-    sudo apt-get install -y default-jre
+RUN useradd chrome --shell /bin/bash --create-home \
+  && usermod -a -G sudo chrome \
+  && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
+  && echo 'chrome:karate' | chpasswd
 
-# Install Maven
-RUN sudo apt-get install -y maven
+RUN apt-get install -y --no-install-recommends \
+  xvfb \
+  x11vnc \
+  xterm \    
+  fluxbox \
+  wmctrl \
+  supervisor \
+  socat \
+  ffmpeg \
+  locales \
+  locales-all
 
-# Set environment variable for the base URL (optional, adjust as needed)
-ENV BASE_URL=https://www.saucedemo.com/
+ENV LANG en_US.UTF-8
 
-# Install Karate
-RUN sudo apt-get install -y unzip
-RUN wget -O karate.jar https://github.com/intuit/karate/releases/download/v1.2.0/karate-1.2.0.jar
+RUN apt-get clean \
+  && rm -rf /var/cache/* /var/log/apt/* /var/lib/apt/lists/* /tmp/* \
+  && mkdir ~/.vnc \
+  && x11vnc -storepasswd karate ~/.vnc/passwd \
+  && locale-gen ${LANG} \
+  && dpkg-reconfigure --frontend noninteractive locales \
+  && update-locale LANG=${LANG}
 
-# Command to execute the Karate tests (adjust the path to your TestLoginRunner.java)
-CMD ["java", "-jar", "karate.jar", "UI_Automation_Project/src/test/java/UI_Automation_Project/login/TestLoginRunner.java"]
+COPY supervisord.conf /etc
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 5900 9222
+
+ADD target/karate.jar /
+ADD target/repository /usr/share/maven/ref/repository
+
+CMD ["/bin/bash", "/entrypoint.sh"]
