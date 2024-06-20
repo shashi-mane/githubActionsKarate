@@ -43,49 +43,71 @@
 #           name: karate-reports
 #           path: UI_Automation_Project/target/surefire-reports
 
+# name: Java Test with TestLoginRunner
+
+# on:
+#   push:
+#   pull_request:
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     services:
+#       selenium:
+#         image: selenium/standalone-chrome
+#         options: --shm-size=2g
+#         ports:
+#           - 4444:4444
+
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+
+#       - name: Build Docker image
+#         run: docker build -t karate-tests .
+
+#       - name: Run tests in Docker container
+#         run: |
+#           docker run --rm --network host \
+#             -v $(pwd):/karate-tests \
+#             -w /karate-tests \
+#             -e BASE_URL=https://www.saucedemo.com/ \
+#             karate-tests \
+#             java -jar karate-tests/karate.jar UI_Automation_Project/src/test/java/UI_Automation_Project/login/TestLoginRunner.java
+
+#       - name: List files in UI_Automation_Project/target/surefire-reports
+#         run: ls -R UI_Automation_Project/target/surefire-reports
+
+#       - name: Upload Test Reports
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: Karate Reports
+#           overwrite: true
+#           path: UI_Automation_Project/target/surefire-reports  # Path to the directory where Karate reports are generated
+
 name: Java Test with TestLoginRunner
-
 on:
-  push:
-  pull_request:
-
+  - push
+  - pull_request
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      selenium:
-        image: selenium/standalone-chrome
-        options: --shm-size=2g
-        ports:
-          - 4444:4444
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+    - name: API tests
+      uses: erikbos/karate-action@main
+      with:
+        url: https://www.saucedemo.com/
+        tests: |
+         UI_Automation_Project/src/test/java/UI_Automation_Project/login/login.feature
 
-      - name: Build Docker image
-        run: docker build -t karate-tests .
-
-      - name: Run tests in Docker container
-        run: |
-          docker run --rm --network host \
-            -v $(pwd):/karate-tests \
-            -w /karate-tests \
-            -e BASE_URL=https://www.saucedemo.com/ \
-            karate-tests \
-            java -jar karate-tests/karate.jar UI_Automation_Project/src/test/java/UI_Automation_Project/login/TestLoginRunner.java
-
-      - name: List files in UI_Automation_Project/target/surefire-reports
-        run: ls -R UI_Automation_Project/target/surefire-reports
-
-      - name: Upload Test Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: Karate Reports
-          overwrite: true
-          path: UI_Automation_Project/target/surefire-reports  # Path to the directory where Karate reports are generated
-
-
+    # Upload the contents of Test Results directory to workspace
+    - name: Output the run Details
+      uses: actions/upload-artifact@v4
+      with:
+          name: Reports
+          path: target/karate-reports
 
 # name: UI Automation Tests
 
