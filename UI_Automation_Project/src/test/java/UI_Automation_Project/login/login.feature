@@ -2,7 +2,8 @@ Feature: Login test
   This is login test
 #json, retry, waitfor, reusable function, config file
 Background:
-* def baseUrl ='https://www.saucedemo.com/' 
+#* def baseUrl ='https://www.saucedemo.com/' 
+* url 'https://www.saucedemo.com/'
 #* def locators = read('classpath:UI_Automation_Project/login/locators.json')
 #* def testData = read('classpath:UI_Automation_Project/login/testData.json')
 * def locators = read('file:UI_Automation_Project/src/test/java/UI_Automation_Project/login/locators.json')
@@ -12,7 +13,7 @@ Background:
 
 # user login using login details in testData.json file 
 Scenario: Login with valid login credentials using standard users
-    Given driver baseUrl
+    #Given driver baseUrl
     And input(locators.saucelabsLogin.Username, testData.Standard_login.Username)
     * delay(3000)
     And input(locators.saucelabsLogin.Password, testData.Standard_login.Password)
