@@ -2,7 +2,7 @@ function fn() {
   var env = karate.env; // get system property 'karate.env'
   // karate.log('karate.env system property was:', env);
   var browser = karate.properties['browser'] || 'chromedriver';
-  karate.log('the browser set is: ' + browser + ', default: "chrome"');
+  karate.log('the browser set is: ' + browser + ', default: "chrome", headless: true');
 
   var config = {
     env: env,
@@ -11,6 +11,7 @@ function fn() {
     baseUrl:  'https://www.saucedemo.com/',
     driver: {
       type: 'chrome',
+      headless: true,
       executable: "C://Program Files//Google//Chrome//Application//chrome.exe" // Specify ChromeDriver path if needed
     }
     // locators: read('classpath:UI_Automation_Project/login/locators.json'),
