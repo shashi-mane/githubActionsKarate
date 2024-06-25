@@ -4,6 +4,9 @@ Feature: Login test
 Background:
 #* def baseUrl ='https://www.saucedemo.com/' 
 * url 'https://www.saucedemo.com/'
+* def path = 'src/test/java/UI_Automation_Project/login/locators.json'
+* def fileExists = karate.fileExists(path)
+* print('File exists: ', fileExists)
 * def locators = read('classpath:UI_Automation_Project/src/test/java/UI_Automation_Project/login/locators.json')
 * def testData = read('classpath:UI_Automation_Project/src/test/java/UI_Automation_Project/login/testData.json')
 #* def locators = read('file:UI_Automation_Project/src/test/java/UI_Automation_Project/login/locators.json')
