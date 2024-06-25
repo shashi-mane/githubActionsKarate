@@ -107,6 +107,12 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('UI_Automation_Project/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven
 
+      - name: Install dependencies and setup Xvfb
+        run: |
+          sudo apt-get install xvfb
+          Xvfb :99 -ac &
+          export DISPLAY=:99
+
       - name: Install Chrome
         run: |
           sudo apt-get update
